@@ -64,12 +64,8 @@ body.dark .header_toggle{
   color: Var.$Darkfirst-color;
 }
 .header_img {
-  // aspect-ratio: 1/1;
-  display: flex;
+  margin-right: 1rem;
   transform: scale(1.5);
-  justify-content: center;
-  border-radius: 50%;
-  overflow: hidden;
   cursor: pointer;
 }
 
@@ -168,11 +164,5 @@ body.dark .l-navbar{
   }
   .body-pd {
     padding-left: calc(var(--nav-width) + 188px);
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .header_img{
-    display: none;
   }
 }
