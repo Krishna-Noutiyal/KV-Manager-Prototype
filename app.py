@@ -40,6 +40,36 @@ def Decrypt(String, Key=Key()):
     """Decrypts a string \nReturns Decrypted string"""
     return Fernet(Key).decrypt(String).decode()
 
+
+""" Mode of the body"""
+
+@app.route("/Mode", methods=['POST', 'GET'])
+def UpdateMode():
+    """Checks if User has toggled dark mode add 'dark' in BodyMode if DARK MODE is enabled else blank"""
+
+    global BodyMode
+    # If the Toggle Mode Button is pressed
+    # JS generates a Post request with the ITS DATA = CLASS OF THE BODY
+    if request.method == "POST":
+
+        # Variable containg the Class of the Body
+        RequestContent = json.loads(request.data)
+
+        # print(f"Theme of the Website : {RequestContent}")
+
+        # Setting the BodyMode
+        BodyMode = RequestContent
+        return f"Website Mode changed to {'Dark' if BodyMode == 'dark' else 'Light'} Successfully"
+
+    # To set the Mode of the website JS automatically
+    # Sends a GET request to get the Current mode of the body
+    # Returns the Mode of the body to JS
+    elif request.method == "GET":
+        return BodyMode
+
+
+""" Home page"""
+
 @app.route("/")
 def Index():
     # If the user has logged in to the WEBSITE

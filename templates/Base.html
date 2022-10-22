@@ -55,9 +55,7 @@
         ></i>
         {% block header %} {% endblock %}
       </div>
-      <div class="header_img">
-        <img src="{{url_for('static', filename='Images/Logo.jpg')}}" alt="" />
-      </div>
+        <i class="bx bx-sun header_img" onclick="WebsiteModeToggle(),SendMode()"></i>
     </header>
 
     <!-- NavBar -->
@@ -125,6 +123,59 @@
   {% block Script %}{% endblock %}
 
   <script>
+
+    const ModeIcon = document.querySelector(".header_img");
+    
+    // Sending GET request to Server URL: UpdateMode
+    // Server Returns the Previous Theme of the Body
+    // If returns the Theme/class of the bady adding that class to body tag
+    $.get({
+      url: "{{url_for('UpdateMode')}}",
+      // Data is getting recieved in string format
+      success: function (data, status) {
+        console.log(`Data Recived from UpdateMode : ${data != "" ? data : "No Data Recived"}\nStatus : ${status}`);
+
+        // If the recieved data is not empty
+        if (data != "") {
+          // Adds the recieved data to the class of the BODY
+          body.classList.add(data);
+          
+          ModeIcon.classList.remove("bx-sun");
+          ModeIcon.classList.add("bx-moon");
+          ModeIcon.style.color = "white";
+        }
+        else{
+          ModeIcon.classList.remove("bx-moon");
+          ModeIcon.classList.add("bx-sun");
+          ModeIcon.removeAttribute("style");
+        }
+      },
+    });
+
+    
+    // When the Toggle Mode button is clicked
+    SendMode = () => {
+      // List of the classes added to body
+      let BodyClass = body.classList;
+
+      // If the BODY'S class contains("dark")
+      // Sends an ajax POST request to the sever with data = "dark"
+      $.ajax({
+        url: '{{url_for("UpdateMode")}}',
+        type: "POST",
+        data: BodyClass.contains("dark")
+          ? JSON.stringify("dark")
+          : JSON.stringify(""),
+        contentType: "application/json",
+        success: function (res) {
+          console.log(res);
+        },
+        error: function (err) {
+          console.log(err);
+        },
+      });
+    };
+  
     // Typing Animation on Loader
     let typed = new Typed("#LoadText", {
       strings: ["Hold ON !!", "Wait !!", "Loading..."],

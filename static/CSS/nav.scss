@@ -1,4 +1,7 @@
+@use  "Var";
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+
+
 :root {
   --header-height: fit-content;
   --nav-width: 68px;
@@ -22,6 +25,11 @@ body {
   font-size: var(--normal-font-size);
   transition: 0.5s;
 }
+
+body.dark{
+  background-color: #2c2158 !important;
+
+}
 a {
   text-decoration: none;
 }
@@ -40,6 +48,10 @@ a {
   z-index: var(--z-fixed);
   transition: 0.5s;
 }
+
+body.dark .header{
+  background-color: #02032c;
+}
 .header_toggle {
   color: var(--first-color);
   font-size: 1.5rem;
@@ -47,26 +59,35 @@ a {
   align-items: center;
   cursor: pointer;
 }
+
+body.dark .header_toggle{
+  color: Var.$Darkfirst-color;
+}
 .header_img {
-  aspect-ratio: 1/1;
+  // aspect-ratio: 1/1;
   display: flex;
+  transform: scale(1.5);
   justify-content: center;
   border-radius: 50%;
   overflow: hidden;
+  cursor: pointer;
 }
-.header_img img {
-  width: 40px;
-}
+
 .l-navbar {
   position: fixed;
   top: 0;
   left: -30%;
   width: var(--nav-width);
   height: 100%;
-  background-color: var(--first-color);
+  background-color: Var.$first-color;
   padding: 0.5rem 1rem 0 0;
   transition: 0.5s;
   z-index: var(--z-fixed);
+}
+
+body.dark .l-navbar{
+  background-color: #02032c;
+  
 }
 .nav {
   height: 100%;
@@ -136,7 +157,7 @@ a {
   }
   .header {
     height: calc(var(--header-height) + 1rem);
-    padding: 0 2rem 0 calc(var(--nav-width) + 2rem);
+    padding: 0 3rem 0 calc(var(--nav-width) + 2rem);
   }
   .l-navbar {
     left: 0;

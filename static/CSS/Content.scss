@@ -3,20 +3,27 @@
   font-size: 30px !important;
   font-weight: 900;
   padding: 12px 60px;
-  color: #01146c;
 }
 
+body.dark .text {
+  color: #d4d2e5;
+}
 .SecText {
   font-size: 21px;
   font-weight: 700;
   color: Var.$primary-color;
 }
 
+body.dark .SecText {
+  color: white;
+}
 .d-text {
   color: #01146c;
-
 }
 
+body.dark .d-text {
+  color: #fff;
+}
 .l-text {
   color: Var.$primary-color;
 }

@@ -25,13 +25,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
   // Your code to run since DOM is loaded and ready
 });
 
+// const body
+const body = document.querySelector("body");
+// const html
+const html = document.querySelector("html");
+// const id nav-bar
+const navbar = document.querySelector("#nav-bar");
 Overflow = () => {
-  // const body
-  const body = document.querySelector("body");
-  // const html
-  const html = document.querySelector("html");
-  // const id nav-bar
-  const navbar = document.querySelector("#nav-bar");
   // If navbar classList doesn't contain show
   console.log(!navbar.classList.contains("show"));
   if (!navbar.classList.contains("show")) {
@@ -46,3 +46,20 @@ Overflow = () => {
     body.style.overflow = "auto";
   }
 };
+
+WebsiteModeToggle = () => {
+  const ModeIcon = document.querySelector(".header_img");
+
+  body.classList.toggle("dark");
+  if (ModeIcon.classList.contains("bx-sun")) {
+    
+    ModeIcon.classList.remove("bx-sun");
+    ModeIcon.classList.add("bx-moon");
+    ModeIcon.style.color = "white";
+  }
+  else {
+    ModeIcon.classList.remove("bx-moon");
+    ModeIcon.classList.add("bx-sun");
+    ModeIcon.removeAttribute("style");
+  }
+}
