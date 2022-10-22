@@ -56,7 +56,7 @@ body.dark .formbars button {
 }
 
 .subtext {
-  color: Var.$primary-color !important;
+  font-weight: 800;
 }
 
 body.dark .subtext {
@@ -79,7 +79,8 @@ body.dark .subtext {
   font-weight: bold;
   letter-spacing: 1px;
   word-spacing: 6px;
-  color: Var.$primary-color;
+  // color: Var.$primary-color;
+  // color: #560404;
 }
 
 body.dark #Caution {

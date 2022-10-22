@@ -24,7 +24,7 @@
       <div class="text" {{Style | safe}}>{{Msg1}} <br />{{Msg2}}</div>
 
       <span>
-        <label class="SecText" for="Usr"><b>UserName : </b></label>
+        <label class="SecText d-text" for="Usr"><b>UserName : </b></label>
         <input
           class="Padinputs SecText"
           type="text"
@@ -34,21 +34,21 @@
         />
       </span>
       <span>
-        <label class="SecText" for="Passwd"><b>Password : </b></label>
+        <label class="SecText d-text" for="Passwd"><b>Password : </b></label>
         <input
-          class="Padinputs SecText"
+          class="Padinputs SecText d-text"
           type="password"
           name="Passwd"
           id="Passwd"
           placeholder="Password"
         />
       </span>
-      <button class="Padinputs SecText" type="submit">Submit</button>
+      <button class="Padinputs SecText d-text" type="submit">Submit</button>
       <div class="Signup-forgot">
-        <a href="{{url_for('Signup')}}" class="SecText">
+        <a href="{{url_for('Signup')}}" class="SecText d-text">
           <span>Signup</span>
         </a>
-        <a href="{{url_for('Forgot')}}" class="SecText">
+        <a href="{{url_for('Forgot')}}" class="SecText d-text">
           <span> Forgot Password ?</span>
         </a>
       </div>

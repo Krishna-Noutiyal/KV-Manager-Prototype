@@ -33,14 +33,16 @@ Overflow = () => {
   // const id nav-bar
   const navbar = document.querySelector("#nav-bar");
   // If navbar classList doesn't contain show
+  console.log(!navbar.classList.contains("show"));
   if (!navbar.classList.contains("show")) {
     // If screen width is greater than 768px
     if (window.innerWidth <= 768) {
       html.style.overflow = "hidden";
       body.style.overflow = "hidden";
-    } else {
-      html.style.overflow = "auto";
-      body.style.overflow = "auto";
     }
+  }
+  else {
+    html.style.overflow = "auto";
+    body.style.overflow = "auto";
   }
 };

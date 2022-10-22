@@ -1,29 +1,38 @@
-@use  "Var";
+@use "Var";
 .text {
-  font-size: 30px;
+  font-size: 30px !important;
   font-weight: 900;
-  color: Var.$primary-color;  
   padding: 12px 60px;
+  color: #01146c;
 }
 
 .SecText {
   font-size: 21px;
-  font-weight: 600;
+  font-weight: 700;
+  color: Var.$primary-color;
 }
 
-.container {
-  margin-top: 5rem;
+.d-text {
+  color: #01146c;
+
+}
+
+.l-text {
+  color: Var.$primary-color;
+}
+.container,
+.home {
+  margin-top: 8rem;
 }
 @media only screen and (max-width: 768px) {
-  .SecText {
-    font-size: 18px;
-  }
   .text {
-    font-size: 24px;
+    font-size: 24px !important;
     padding: 12px 20px;
-
-    .Padinputs {
-      font-size: 20px;
-    }
+  }
+  .Padinputs {
+    font-size: 20px;
+  }
+  .SecText {
+    font-size: 18px !important;
   }
 }

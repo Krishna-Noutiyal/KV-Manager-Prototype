@@ -61,7 +61,7 @@ body.dark .formbars button:hover {
 }
 
 .subtext {
-  color: #695CFE !important;
+  font-weight: 800;
 }
 
 body.dark .subtext {
@@ -81,7 +81,6 @@ body.dark .subtext {
   font-weight: bold;
   letter-spacing: 1px;
   word-spacing: 6px;
-  color: #695CFE;
 }
 
 body.dark #Caution {
