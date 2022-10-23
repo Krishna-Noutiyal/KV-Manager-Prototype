@@ -29,11 +29,11 @@
 .formbars form button {
   align-self: flex-end;
   margin-right: 2rem;
-  color: #707070;
+  color: #695CFE;
   cursor: pointer;
 }
 .formbars form button:hover {
-  color: #18191a;
+  color: #2c2158;
 }
 
 .Padinputs {
@@ -41,31 +41,13 @@
   border: 3px solid #695CFE;
   border-radius: 12px;
   font-size: 24px;
-  background-color: #DDD;
+  background-color: #f7f6fb;
   outline: none;
   transition: all 0.3s ease;
 }
 
-body.dark .Padinputs {
-  border: 3px solid orange;
-  color: #ccc;
-  background-color: #242526;
-}
-
-body.dark .formbars button {
-  color: #ccc;
-}
-body.dark .formbars button:hover {
-  color: orange;
-  border-color: #ccc;
-}
-
 .subtext {
   font-weight: 800;
-}
-
-body.dark .subtext {
-  color: orange !important;
 }
 
 .Signup-forgot {
@@ -81,8 +63,4 @@ body.dark .subtext {
   font-weight: bold;
   letter-spacing: 1px;
   word-spacing: 6px;
-}
-
-body.dark #Caution {
-  color: orange;
 }/*# sourceMappingURL=Login.css.map */

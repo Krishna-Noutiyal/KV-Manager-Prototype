@@ -6,26 +6,14 @@
   padding: 12px 60px;
 }
 
-body.dark .text {
-  color: #d4d2e5;
-}
-
 .SecText {
   font-size: 21px;
   font-weight: 700;
   color: #695CFE;
 }
 
-body.dark .SecText {
-  color: white;
-}
-
 .d-text {
   color: #01146c;
-}
-
-body.dark .d-text {
-  color: #fff;
 }
 
 .l-text {

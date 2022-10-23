@@ -24,7 +24,7 @@
     & button {
       align-self: flex-end;
       margin-right: 2rem;
-      color: Var.$text-color;
+      color: Var.$primary-color;
       cursor: pointer;
       &:hover {
         color: Var.$Darkbody-color;
@@ -38,30 +38,15 @@
   border: 3px solid Var.$primary-color;
   border-radius: 12px;
   font-size: 24px;
-  background-color: Var.$toggle-color;
+  background-color: Var.$white-color;
   outline: none;
   transition: Var.$tran-03;
-}
-body.dark .Padinputs {
-  border: 3px solid Var.$Darksubtext-color;
-  color: Var.$Darktext-color;
-  background-color: Var.$Darksidebar-color;
-}
-body.dark .formbars button {
-  color: Var.$Darktext-color;
-  &:hover {
-    color: Var.$Darksubtext-color;
-    border-color: Var.$Darktext-color;
-  }
 }
 
 .subtext {
   font-weight: 800;
 }
 
-body.dark .subtext {
-  color: Var.$Darksubtext-color !important;
-}
 
 // Singup and Forgot buttons
 .Signup-forgot {
@@ -81,9 +66,5 @@ body.dark .subtext {
   word-spacing: 6px;
   // color: Var.$primary-color;
   // color: #560404;
-}
-
-body.dark #Caution {
-  color: Var.$Darksubtext-color;
 }
 
