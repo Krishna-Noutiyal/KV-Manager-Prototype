@@ -42,6 +42,7 @@ def Decrypt(String, Key=Key()):
     """Decrypts a string \nReturns Decrypted string"""
     return Fernet(Key).decrypt(String).decode()
 
+
 """ Mode of the body"""
 
 
@@ -72,6 +73,7 @@ def UpdateMode():
 
 """ Home page"""
 
+
 @app.route("/")
 def Index():
     # If the user has logged in to the WEBSITE
@@ -88,6 +90,14 @@ def Index():
 def LoginOrNot():
     global log
     return json.dumps(log)
+
+
+""" Login PAGE """
+
+
+@app.route("/User_Admin_Login", methods=["POST", "GET"])
+def User_Admin_Login():
+    return render_template("User-Admin-Login.html")
 
 
 """ Login PAGE """
@@ -166,6 +176,91 @@ def Login():
             # Changeing the Warning color to orange
             Style = Style.replace("red", "orange")
             return render_template("Login.html", Style=Style, Msg1=a, Msg2=b)
+
+        # If User has logged in
+        else:
+            # Clearing the Variables after the logout
+            # Because if user fails to login once before successfully loggin in
+            # the Variables values doesn't get cleared
+            # Showing the error msg again even after logout
+            Display = ""
+            Display1 = ""
+            return redirect(url_for("logout"))
+
+
+@app.route("/AdminLogin", methods=["POST", "GET"])
+def AdminLogin():
+    """Saves UserName and Password in the Globle Variables and changes log = True"""
+    global log
+    global Display
+    global Display1
+    global SingupDisplay
+    global SingupDisplay1
+
+    # Style of the Warning
+    Style = 'style="font-size: 19px; color: red; text-align: center;"'
+
+    #   If the Form   is Submitted
+    if request.method == "POST":
+
+        # Try except if UserName and Passwd is not in the DATABASE
+        try:
+
+            # Gets the data from server and stores in UserInfo dict (Username:Passwd)
+            cr.execute("select username,passwd,email from flask;")
+            UserInfo = {i[0]: [Decrypt(i[2]), Decrypt(i[1])]
+                        for i in cr.fetchall()}
+
+            # print("This function ran !!!")
+            # for i, j in UserInfo.items():
+            #     print(f"UserName : {i}")
+            #     print(f"Email : {j[0]}")
+            #     print(f"Passwd : {j[1]}")
+            # UserName taken from the FORM
+            UserName = request.form["Usr"]
+            # Passwd taken from the FORM
+            Passwd = request.form['Passwd']
+            # If Credentials in the database does not match the User Input
+            # Raises an Exception
+            if UserInfo[UserName][1] != Passwd:
+
+                raise Exception("Wrong UserName")
+
+            # If Credentials matches Sets log varaible = true
+            # Means user is now Loged in the Website
+            else:
+                log = True
+                return redirect(url_for("Index"))
+
+        # If Exception Occur Changes Display and Displa1 varaible
+        # And Renders the Login page again but with the Msg of Display and Display1
+        except Exception as e:
+            Display = "Wrong UserName or Password"
+            Display1 = "!! TRY AGAIN !!"
+
+            return render_template("Login.html", Style=Style, Msg1=Display, Msg2=Display1)
+
+    # If User has not yet Loged in to the website GET request
+    else:
+
+        # If user has clicked login button
+        if log == False and SingupDisplay == "" and SingupDisplay1 == "":
+
+            # Style of the Warning
+            Style = 'style="font-size: 19px; color: red; text-align: center; display: none; "'
+
+            return render_template("AdminLogin.html", Style=Style, Msg1=Display, Msg2=Display1)
+
+        # If user has been redirected to Login from Signup Page
+        elif log == False and SingupDisplay != "" and SingupDisplay1 != "":
+            a = SingupDisplay
+            b = SingupDisplay1
+            SingupDisplay = ""
+            SingupDisplay1 = ""
+
+            # Changeing the Warning color to orange
+            Style = Style.replace("red", "orange")
+            return render_template("AdminLogin.html", Style=Style, Msg1=a, Msg2=b)
 
         # If User has logged in
         else:
@@ -323,6 +418,7 @@ def Homework():
 @app.route("/T_Console", methods=["GET", "POST"])
 def T_Console():
     return render_template("T_Console.html")
+
 
 """ Change Credentials """
 
