@@ -1,8 +1,10 @@
+from fileinput import filename
 from flask import Flask, render_template, redirect, url_for, request
 from cryptography.fernet import Fernet
 import json
-
 import mysql.connector as sql
+
+from News import Get_News
 
 app = Flask(__name__)
 
@@ -43,6 +45,7 @@ def Decrypt(String, Key=Key()):
 
 """ Mode of the body"""
 
+
 @app.route("/Mode", methods=['POST', 'GET'])
 def UpdateMode():
     """Checks if User has toggled dark mode add 'dark' in BodyMode if DARK MODE is enabled else blank"""
@@ -70,6 +73,7 @@ def UpdateMode():
 
 """ Home page"""
 
+
 @app.route("/")
 def Index():
     # If the user has logged in to the WEBSITE
@@ -94,6 +98,7 @@ def LoginOrNot():
 @app.route("/User_Admin_Login", methods=["POST", "GET"])
 def User_Admin_Login():
     return render_template("User-Admin-Login.html")
+
 
 """ Login PAGE """
 
@@ -181,6 +186,7 @@ def Login():
             Display = ""
             Display1 = ""
             return redirect(url_for("logout"))
+
 
 @app.route("/AdminLogin", methods=["POST", "GET"])
 def AdminLogin():
@@ -386,16 +392,18 @@ def Forgot():
 """ Other Pages"""
 
 
-
-
-
 @app.route("/Events", methods=["GET", "POST"])
 def Events():
     return render_template("Events.html")
 
+
 @app.route("/News", methods=["GET", "POST"])
 def News():
-    return render_template("News.html")
+    a = Get_News()
+    print(a[0][0])
+    print(a[0][0])
+    return render_template("News.html", Content= a)
+
 
 @app.route("/Classwork", methods=["GET", "POST"])
 def Classwork():
@@ -406,33 +414,14 @@ def Classwork():
 def Homework():
     return render_template("Homework.html")
 
+
 @app.route("/T_Console", methods=["GET", "POST"])
 def T_Console():
     return render_template("T_Console.html")
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 """ Change Credentials """
+
 
 @app.route("/ChangeCredentials", methods=["POST", "GET"])
 def ChangeCredentials():
@@ -488,6 +477,7 @@ def ChangeCredentials():
 @app.route("/<i>/")
 def ReRoute(i=str):
     return render_template("PageNotFound.html")
+
 
 if __name__ == "__main__":
 

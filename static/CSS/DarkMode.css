@@ -52,4 +52,8 @@ body.dark .header_toggle {
 
 body.dark .l-navbar {
   background-color: #02032c;
+}
+
+body.dark .shadow {
+  box-shadow: 0 0.5rem 1rem rgba(116, 93, 249, 0.14) !important;
 }/*# sourceMappingURL=DarkMode.css.map */

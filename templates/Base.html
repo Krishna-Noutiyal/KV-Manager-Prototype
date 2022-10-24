@@ -267,7 +267,7 @@
       ) {
         // console.log("Inside If");
         Login.classList.add("active");
-      }else if (url.indexOf("{{url_for('Events')}}") != -1) {
+      } else if (url.indexOf("{{url_for('Events')}}") != -1) {
         linkColor[1].classList.add("active");
       } else if (url.indexOf("{{url_for('News')}}") != -1) {
         linkColor[2].classList.add("active");
@@ -279,7 +279,7 @@
         linkColor[5].classList.add("active");
       } else if (url.indexOf("{{url_for('Index')}}") != -1) {
         linkColor[0].classList.add("active");
-      } 
+      }
     }
 
     colorLink();
