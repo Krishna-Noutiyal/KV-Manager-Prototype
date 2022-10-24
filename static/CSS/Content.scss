@@ -11,8 +11,37 @@
   font-weight: 600;
 }
 
+<<<<<<< Updated upstream
 .container {
   margin-top: 5rem;
+=======
+.d-text {
+  color: #01146c;
+}
+
+.l-text {
+  color: Var.$primary-color;
+}
+.container,
+.home {
+  margin-top: 8rem;
+  padding-bottom: 5rem;
+}
+
+
+.Post-Heading{
+  font-weight: 600 !important;
+}
+.Post-Para{
+  line-height: 2rem;
+  opacity: 90%;
+  letter-spacing: 2px;
+  font-weight: 400 !important;
+  & a{
+    text-decoration: none;
+    font-weight: 900;
+  }
+>>>>>>> Stashed changes
 }
 @media only screen and (max-width: 768px) {
   .SecText {

@@ -1,0 +1,59 @@
+/* ===== Colors ===== */
+/* ====== Dark Theme Variables ====== */
+body.dark .Padinputs {
+  border: 3px solid #00ffd0;
+  color: #ccc;
+  background-color: #02032c;
+}
+
+body.dark .formbars button {
+  color: #ccc;
+}
+body.dark .formbars button:hover {
+  color: #00ffd0;
+  border-color: #ccc;
+}
+
+body.dark a:hover {
+  color: #ccc;
+}
+
+body.dark .nav_list a:hover {
+  color: #fff;
+}
+
+body.dark .subtext {
+  color: #00ffd0 !important;
+}
+
+body.dark #Caution {
+  color: #00ffd0;
+}
+
+body.dark .text {
+  color: #d4d2e5;
+}
+
+body.dark .SecText {
+  color: white;
+}
+
+body.dark .d-text {
+  color: #fff;
+}
+
+body.dark .header {
+  background-color: #02032c;
+}
+
+body.dark .header_toggle {
+  color: #fff;
+}
+
+body.dark .l-navbar {
+  background-color: #02032c;
+}
+
+body.dark .shadow {
+  box-shadow: 0 0.5rem 1rem rgba(118, 64, 255, 0.15) !important;
+}/*# sourceMappingURL=DarkMode.css.map */

@@ -46,6 +46,7 @@
   transition: all 0.3s ease;
 }
 
+<<<<<<< Updated upstream
 body.dark .Padinputs {
   border: 3px solid orange;
   color: #ccc;
@@ -58,6 +59,10 @@ body.dark .formbars button {
 body.dark .formbars button:hover {
   color: orange;
   border-color: #ccc;
+=======
+a {
+  text-decoration: underline !important;
+>>>>>>> Stashed changes
 }
 
 .subtext {
