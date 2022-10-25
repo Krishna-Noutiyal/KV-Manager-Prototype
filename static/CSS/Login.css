@@ -46,7 +46,7 @@
   transition: all 0.3s ease;
 }
 
-.home, .container a {
+.Signup-forgot a {
   text-decoration: underline !important;
 }
 

@@ -4,7 +4,7 @@ from cryptography.fernet import Fernet
 import json
 import pymysql as sql
 
-from FetchContent import Get_News, Get_Events
+from FetchContent import Get_News, Get_Newses, Get_Event, Get_Events
 
 app = Flask(__name__)
 
@@ -355,7 +355,6 @@ def Signup():
 
 @app.route("/Forgotpasswd", methods=["POST", "GET"])
 def Forgot():
-
     Style = 'style="font-size: 19px; color: red; text-align: center;"'
     # If the request is POST
     if request.method == "POST":
@@ -402,6 +401,7 @@ def News():
     return render_template("News.html", Content= Get_News())
 
 
+
 @app.route("/Classwork", methods=["GET", "POST"])
 def Classwork():
     return render_template("Classwork.html")
@@ -415,6 +415,25 @@ def Homework():
 @app.route("/T_Console", methods=["GET", "POST"])
 def T_Console():
     return render_template("T_Console.html")
+
+
+@app.route("/Post/<NewsOrPost>/<SerialNo>", methods=["GET", "POST"])
+def Post(NewsOrPost, SerialNo):
+    
+    if NewsOrPost == "News":
+        try:
+            return render_template("Post.html", Cnt=Get_News(Sr=SerialNo)[0])
+        except:
+            return redirect(url_for('ReRoute', i="Something went wrong"))
+    elif NewsOrPost == "Post":
+        
+        try:
+            return render_template("Post.html", Cnt=Get_Event(Sr=SerialNo)[0])
+        except:
+            return redirect(url_for('ReRoute', i="Something went wrong"))
+
+
+
 
 
 """ Change Credentials """
@@ -474,6 +493,7 @@ def ChangeCredentials():
 @app.route("/<i>/")
 def ReRoute(i=str):
     return render_template("PageNotFound.html")
+
 
 
 if __name__ == "__main__":
