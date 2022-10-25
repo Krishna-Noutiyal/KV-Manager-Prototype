@@ -1,32 +1,59 @@
 {% extends "Base.html" %}
 
-
 <!-- Head -->
 {% block head %}
-    <title>
-        Events
-    </title>
+<title>Events</title>
 {% endblock %}
-
 
 <!-- Header Content -->
 {% block header %}
-<div class="text">Events going on !!</div>
+<div class="text">Events Going On !!</div>
 {% endblock %}
-
 
 <!-- Body Content -->
 
 {% block Content %}
-    <div class="container">
-        <div class="row SecText">
-             Events Page
+<div class="container SecText">
+  <div class="row gy-5 gap-lg-0 justify-content-center">
+    {% for News in Content %}
+    <div class="col-xl-4 col-lg-6">
+      <div class="p-4 shadow rounded">
+        <div
+          class="hover-zoom Img-container shadow mw-40 d-flex justify-content-center"
+        >
+          <a href="">
+            <img
+              class="img-fluid"
+              src="{{News[-1]}}"
+              alt="Image Not Found"
+              srcset=""
+            />
+          </a>
         </div>
-    </div>
-{% endblock %}
 
+        <div class="Post-Context blockquote SecText">
+
+          <h2 class="mt-4 Post-Heading">{{News[3]}}</h2>
+
+          <h5 class="Post-Heading d-flex justify-content-between">
+            <span class="text-start">By : {{News[2]}} </span>
+            <!-- <span class="text-end">Class : {{News[1]}}</span> -->
+          </h5>
+          <h5 class="px-4 lead Post-Para">
+            {{News[4]}} <a href="" class="SecText">...</a>
+          </h5>
+          <a href=""
+            ><footer class="blockquote-footer text-end mt-2 SecText">
+              Read More
+            </footer></a
+          >
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
 
 <!-- Scripts -->
-{% block Script %}
-
-{% endblock %}
+{% block Script %} {% endblock %}

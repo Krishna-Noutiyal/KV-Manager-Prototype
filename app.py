@@ -2,9 +2,9 @@ from fileinput import filename
 from flask import Flask, render_template, redirect, url_for, request
 from cryptography.fernet import Fernet
 import json
-import mysql.connector as sql
+import pymysql as sql
 
-from News import Get_News
+from FetchContent import Get_News, Get_Events
 
 app = Flask(__name__)
 
@@ -394,15 +394,12 @@ def Forgot():
 
 @app.route("/Events", methods=["GET", "POST"])
 def Events():
-    return render_template("Events.html")
+    return render_template("Events.html", Content= Get_Events())
 
 
 @app.route("/News", methods=["GET", "POST"])
 def News():
-    a = Get_News()
-    print(a[0][0])
-    print(a[0][0])
-    return render_template("News.html", Content= a)
+    return render_template("News.html", Content= Get_News())
 
 
 @app.route("/Classwork", methods=["GET", "POST"])
@@ -482,8 +479,10 @@ def ReRoute(i=str):
 if __name__ == "__main__":
 
     # Connecting to the DATABASE
+    # Db = sql.connect(host="localhost", user="root",
+    #                  passwd="19780000", database="Flask", autocommit=True, auth_plugin='mysql_native_password')
     Db = sql.connect(host="localhost", user="root",
-                     passwd="19780000", database="Flask", autocommit=True, auth_plugin='mysql_native_password')
+                     passwd="19780000", database="Flask", autocommit=True)
 
     # Cursor on the DATABASE
     cr = Db.cursor()
