@@ -8,8 +8,6 @@ from FetchContent import Get_News, Get_Newses, Get_Event, Get_Events
 
 app = Flask(__name__)
 app.secret_key = "SecretKey"
-log = False
-
 UserName = ""
 Passwd = ""
 
@@ -71,10 +69,17 @@ def UpdateMode():
 @app.route("/")
 def Index():
     # If the user has logged in to the WEBSITE
-    if log == True:
-        return render_template("Index.html", Content=f"Logged in Successfully !!")
-    # If the user has not yet Logged in to the WEBSITE
-    return render_template("Index.html", Content="Welcome to Home Page !!")
+    try:
+        if session["Log"] == True:
+            return render_template("Index.html", Content=f"Logged in Successfully !!")
+        # If the user has not yet Logged in to the WEBSITE
+        else:
+            return render_template("Index.html", Content="Welcome to Home Page !!")
+
+    except:
+        session["Log"] = False
+        return render_template("Index.html", Content="Welcome to Home Page !!")
+    
 
 
 
@@ -152,23 +157,30 @@ def Login():
     IF User has ALREADY logged in to the website
     """
         # If user has clicked login button
-        if session["Log"] == False and SingupDisplay == "" and SingupDisplay1 == "":
+        try :
+            Log = session["Log"]
+        except:
 
-            # Style of the Warning
-            Style = 'style="font-size: 19px; color: red; text-align: center; display: none; "'
+            if SingupDisplay == "" and SingupDisplay1 == "":
 
-            return render_template("Login.html", Style=Style, Msg1=Display, Msg2=Display1)
+                # Style of the Warning
+                Style = 'style="font-size: 19px; color: red; text-align: center; display: none; "'
 
-        # If user has been redirected to Login from Signup Page
-        elif session["Log"] == False and SingupDisplay != "" and SingupDisplay1 != "":
-            a = SingupDisplay
-            b = SingupDisplay1
-            SingupDisplay = ""
-            SingupDisplay1 = ""
+                return render_template("Login.html", Style=Style, Msg1=Display, Msg2=Display1)
 
-            # Changeing the Warning color to orange
-            Style = Style.replace("red", "orange")
-            return render_template("Login.html", Style=Style, Msg1=a, Msg2=b)
+            # If user has been redirected to Login from Signup Page
+            elif SingupDisplay != "" and SingupDisplay1 != "":
+                a = SingupDisplay
+                b = SingupDisplay1
+                SingupDisplay = ""
+                SingupDisplay1 = ""
+
+                # Changeing the Warning color to orange
+                Style = Style.replace("red", "orange")
+                return render_template("Login.html", Style=Style, Msg1=a, Msg2=b)
+            
+
+        return render_template("Login.html")
 
 
 @app.route("/AdminLogin", methods=["POST", "GET"])
@@ -229,15 +241,16 @@ def AdminLogin():
 
             return render_template("AdminLogin.html", Style=Style, Msg1=Display, Msg2=Display1)
     else:
-        return render_template("AdminLogin.html", Style=Style, Msg1=Display, Msg2=Display1)
+        return render_template("AdminLogin.html")
 """ Logout PAGE """
 
 
-@app.route("/logout", methods=["GET", "POST"])
+@app.route("/logout")
 def Logout():
     session["Log"] = False
     session["Admin"] = False
-    return redirect(url_for("Index"))
+    # return redirect(url_for("Index"))
+    return render_template("Index.html", Content = "Logged Out Successfully !!")
 
 
 """ Signup Page"""
