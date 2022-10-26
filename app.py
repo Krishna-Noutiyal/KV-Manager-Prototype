@@ -1,21 +1,15 @@
 from fileinput import filename
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, session
 from cryptography.fernet import Fernet
 import json
-import mysql.connector as sql
+import pymysql as sql
 
-from News import Get_News
+from FetchContent import Get_News, Get_Newses, Get_Event, Get_Events
 
 app = Flask(__name__)
-
-log = False
-
+app.secret_key = "SecretKey"
 UserName = ""
 Passwd = ""
-
-# Variable containing the Mode of the website if dark ('dark') if light ('')
-BodyMode = ""
-SideBar = ""
 
 # Display : Msg1 displayed if UserName and Passwd is incorrect
 Display = ""
@@ -46,29 +40,27 @@ def Decrypt(String, Key=Key()):
 """ Mode of the body"""
 
 
-@app.route("/Mode", methods=['POST', 'GET'])
+@app.route("/Mode/", methods=['POST', 'GET'])
 def UpdateMode():
     """Checks if User has toggled dark mode add 'dark' in BodyMode if DARK MODE is enabled else blank"""
-
-    global BodyMode
     # If the Toggle Mode Button is pressed
     # JS generates a Post request with the ITS DATA = CLASS OF THE BODY
     if request.method == "POST":
 
         # Variable containg the Class of the Body
         RequestContent = json.loads(request.data)
-
         # print(f"Theme of the Website : {RequestContent}")
 
         # Setting the BodyMode
-        BodyMode = RequestContent
-        return f"Website Mode changed to {'Dark' if BodyMode == 'dark' else 'Light'} Successfully"
+        session["Mode"] = RequestContent
+        print(f"\n\n\n\nMode of the body :{session['Mode']}\n\n\n")
+        return f"Website Mode changed to {'Dark' if session['Mode'] == 'dark' else 'Light'} Successfully"
 
     # To set the Mode of the website JS automatically
     # Sends a GET request to get the Current mode of the body
     # Returns the Mode of the body to JS
-    elif request.method == "GET":
-        return BodyMode
+    else:
+        return session["Mode"]
 
 
 """ Home page"""
@@ -77,19 +69,19 @@ def UpdateMode():
 @app.route("/")
 def Index():
     # If the user has logged in to the WEBSITE
-    if log == True:
-        return render_template("Index.html", Content=f"Logged in Successfully !!")
-    # If the user has not yet Logged in to the WEBSITE
-    return render_template("Index.html", Content="Welcome to Home Page !!")
+    try:
+        if session["Log"] == True:
+            return render_template("Index.html", Content=f"Logged in Successfully !!")
+        # If the user has not yet Logged in to the WEBSITE
+        else:
+            return render_template("Index.html", Content="Welcome to Home Page !!")
+
+    except:
+        session["Log"] = False
+        return render_template("Index.html", Content="Welcome to Home Page !!")
+    
 
 
-""" Login OR Not"""
-
-
-@app.route("/Loginornot", methods=["GET"])
-def LoginOrNot():
-    global log
-    return json.dumps(log)
 
 
 """ Login PAGE """
@@ -97,6 +89,7 @@ def LoginOrNot():
 
 @app.route("/User_Admin_Login", methods=["POST", "GET"])
 def User_Admin_Login():
+
     return render_template("User-Admin-Login.html")
 
 
@@ -106,7 +99,6 @@ def User_Admin_Login():
 @app.route("/Login", methods=["POST", "GET"])
 def Login():
     """Saves UserName and Password in the Globle Variables and changes log = True"""
-    global log
     global Display
     global Display1
     global SingupDisplay
@@ -144,7 +136,10 @@ def Login():
             # If Credentials matches Sets log varaible = true
             # Means user is now Loged in the Website
             else:
-                log = True
+
+                # Log = True if user has logged in the website
+                session["Log"] = True
+
                 return redirect(url_for("Index"))
 
         # If Exception Occur Changes Display and Displa1 varaible
@@ -155,11 +150,14 @@ def Login():
 
             return render_template("Login.html", Style=Style, Msg1=Display, Msg2=Display1)
 
-    # If User has not yet Loged in to the website GET request
+    
     else:
-
+        """
+    If User has not yet Loged in to the website  OR
+    IF User has ALREADY logged in to the website
+    """
         # If user has clicked login button
-        if log == False and SingupDisplay == "" and SingupDisplay1 == "":
+        if session["Log"] == False and SingupDisplay == "" and SingupDisplay1 == "":
 
             # Style of the Warning
             Style = 'style="font-size: 19px; color: red; text-align: center; display: none; "'
@@ -167,7 +165,7 @@ def Login():
             return render_template("Login.html", Style=Style, Msg1=Display, Msg2=Display1)
 
         # If user has been redirected to Login from Signup Page
-        elif log == False and SingupDisplay != "" and SingupDisplay1 != "":
+        elif session["Log"] == False and SingupDisplay != "" and SingupDisplay1 != "":
             a = SingupDisplay
             b = SingupDisplay1
             SingupDisplay = ""
@@ -176,22 +174,14 @@ def Login():
             # Changeing the Warning color to orange
             Style = Style.replace("red", "orange")
             return render_template("Login.html", Style=Style, Msg1=a, Msg2=b)
-
-        # If User has logged in
+        
         else:
-            # Clearing the Variables after the logout
-            # Because if user fails to login once before successfully loggin in
-            # the Variables values doesn't get cleared
-            # Showing the error msg again even after logout
-            Display = ""
-            Display1 = ""
-            return redirect(url_for("logout"))
+            return render_template("Login.html")
 
 
 @app.route("/AdminLogin", methods=["POST", "GET"])
 def AdminLogin():
     """Saves UserName and Password in the Globle Variables and changes log = True"""
-    global log
     global Display
     global Display1
     global SingupDisplay
@@ -229,7 +219,14 @@ def AdminLogin():
             # If Credentials matches Sets log varaible = true
             # Means user is now Loged in the Website
             else:
-                log = True
+
+                # Log = True if user has logged in the website
+                session["Log"] = True
+
+                """ Admin = True to let know if the account logged in is admin"""
+
+                session["Admin"] = True
+                print(f"\n\n\n\n {session['Admin']}\n\n\n\n")
                 return redirect(url_for("Index"))
 
         # If Exception Occur Changes Display and Displa1 varaible
@@ -238,49 +235,18 @@ def AdminLogin():
             Display = "Wrong UserName or Password"
             Display1 = "!! TRY AGAIN !!"
 
-            return render_template("Login.html", Style=Style, Msg1=Display, Msg2=Display1)
-
-    # If User has not yet Loged in to the website GET request
-    else:
-
-        # If user has clicked login button
-        if log == False and SingupDisplay == "" and SingupDisplay1 == "":
-
-            # Style of the Warning
-            Style = 'style="font-size: 19px; color: red; text-align: center; display: none; "'
-
             return render_template("AdminLogin.html", Style=Style, Msg1=Display, Msg2=Display1)
-
-        # If user has been redirected to Login from Signup Page
-        elif log == False and SingupDisplay != "" and SingupDisplay1 != "":
-            a = SingupDisplay
-            b = SingupDisplay1
-            SingupDisplay = ""
-            SingupDisplay1 = ""
-
-            # Changeing the Warning color to orange
-            Style = Style.replace("red", "orange")
-            return render_template("AdminLogin.html", Style=Style, Msg1=a, Msg2=b)
-
-        # If User has logged in
-        else:
-            # Clearing the Variables after the logout
-            # Because if user fails to login once before successfully loggin in
-            # the Variables values doesn't get cleared
-            # Showing the error msg again even after logout
-            Display = ""
-            Display1 = ""
-            return redirect(url_for("logout"))
-
-
+    else:
+        return render_template("AdminLogin.html")
 """ Logout PAGE """
 
 
-@app.route("/logout", methods=["GET", "POST"])
-def logout():
-    global log
-    log = False
-    return redirect(url_for("Index"))
+@app.route("/logout")
+def Logout():
+    session["Log"] = False
+    session["Admin"] = False
+    # return redirect(url_for("Index"))
+    return render_template("Index.html", Content = "Logged Out Successfully !!")
 
 
 """ Signup Page"""
@@ -355,7 +321,6 @@ def Signup():
 
 @app.route("/Forgotpasswd", methods=["POST", "GET"])
 def Forgot():
-
     Style = 'style="font-size: 19px; color: red; text-align: center;"'
     # If the request is POST
     if request.method == "POST":
@@ -389,20 +354,29 @@ def Forgot():
     return render_template("Forgot.html", Style=Style)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 """ Other Pages"""
 
 
 @app.route("/Events", methods=["GET", "POST"])
 def Events():
-    return render_template("Events.html")
+    return render_template("Events.html", Content=Get_Events())
 
 
 @app.route("/News", methods=["GET", "POST"])
 def News():
-    a = Get_News()
-    print(a[0][3])
-    print(a[0][4])
-    return render_template("News.html", Content= a)
+    return render_template("News.html", Content=Get_News())
 
 
 @app.route("/Classwork", methods=["GET", "POST"])
@@ -418,6 +392,22 @@ def Homework():
 @app.route("/T_Console", methods=["GET", "POST"])
 def T_Console():
     return render_template("T_Console.html")
+
+
+@app.route("/Post/<NewsOrPost>/<SerialNo>", methods=["GET", "POST"])
+def Post(NewsOrPost, SerialNo):
+
+    if NewsOrPost == "News":
+        try:
+            return render_template("Post.html", Cnt=Get_News(Sr=SerialNo)[0])
+        except:
+            return redirect(url_for('ReRoute', i="Something went wrong"))
+    elif NewsOrPost == "Post":
+
+        try:
+            return render_template("Post.html", Cnt=Get_Event(Sr=SerialNo)[0])
+        except:
+            return redirect(url_for('ReRoute', i="Something went wrong"))
 
 
 """ Change Credentials """
@@ -482,8 +472,10 @@ def ReRoute(i=str):
 if __name__ == "__main__":
 
     # Connecting to the DATABASE
+    # Db = sql.connect(host="localhost", user="root",
+    #                  passwd="19780000", database="Flask", autocommit=True, auth_plugin='mysql_native_password')
     Db = sql.connect(host="localhost", user="root",
-                     passwd="19780000", database="Flask", autocommit=True, auth_plugin='mysql_native_password')
+                     passwd="19780000", database="Flask", autocommit=True)
 
     # Cursor on the DATABASE
     cr = Db.cursor()
