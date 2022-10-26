@@ -156,26 +156,27 @@ def Login():
     IF User has ALREADY logged in to the website
     """
         # If user has clicked login button
-        print(session["Log"])
-        if session["Log"] == False and SingupDisplay == "" and SingupDisplay1 == "":
 
-            # Style of the Warning
-            Style = 'style="font-size: 19px; color: red; text-align: center; display: none; "'
+        try :
+            if session["Log"] == False and SingupDisplay == "" and SingupDisplay1 == "":
 
-            return render_template("Login.html", Style=Style, Msg1=Display, Msg2=Display1)
+                # Style of the Warning
+                Style = 'style="font-size: 19px; color: red; text-align: center; display: none; "'
 
-        # If user has been redirected to Login from Signup Page
-        elif session["Log"] == False and SingupDisplay != "" and SingupDisplay1 != "":
-            a = SingupDisplay
-            b = SingupDisplay1
-            SingupDisplay = ""
-            SingupDisplay1 = ""
+                return render_template("Login.html", Style=Style, Msg1=Display, Msg2=Display1)
 
-            # Changeing the Warning color to orange
-            Style = Style.replace("red", "orange")
-            return render_template("Login.html", Style=Style, Msg1=a, Msg2=b)
-        
-        else:
+            # If user has been redirected to Login from Signup Page
+            elif session["Log"] == False and SingupDisplay != "" and SingupDisplay1 != "":
+                a = SingupDisplay
+                b = SingupDisplay1
+                SingupDisplay = ""
+                SingupDisplay1 = ""
+
+                # Changeing the Warning color to orange
+                Style = Style.replace("red", "orange")
+                return render_template("Login.html", Style=Style, Msg1=a, Msg2=b)
+            
+        except:
             return render_template("Login.html")
 
 
