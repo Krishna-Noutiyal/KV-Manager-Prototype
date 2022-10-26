@@ -8,8 +8,6 @@ from FetchContent import Get_News, Get_Newses, Get_Event, Get_Events
 
 app = Flask(__name__)
 app.secret_key = "SecretKey"
-log = False
-
 UserName = ""
 Passwd = ""
 
@@ -71,7 +69,7 @@ def UpdateMode():
 @app.route("/")
 def Index():
     # If the user has logged in to the WEBSITE
-    if log == True:
+    if session["Log"] == True:
         return render_template("Index.html", Content=f"Logged in Successfully !!")
     # If the user has not yet Logged in to the WEBSITE
     return render_template("Index.html", Content="Welcome to Home Page !!")
