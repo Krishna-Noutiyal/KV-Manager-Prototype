@@ -40,8 +40,7 @@ Overflow = () => {
       html.style.overflow = "hidden";
       body.style.overflow = "hidden";
     }
-  }
-  else {
+  } else {
     html.style.overflow = "auto";
     body.style.overflow = "auto";
   }
@@ -51,15 +50,19 @@ WebsiteModeToggle = () => {
   const ModeIcon = document.querySelector(".header_img");
 
   body.classList.toggle("dark");
-  if (ModeIcon.classList.contains("bx-sun")) {
-    
+
+  // IF the body is 
+  if (body.classList.contains("dark")) {
+    ModeIcon.style.color = "white";
     ModeIcon.classList.remove("bx-sun");
     ModeIcon.classList.add("bx-moon");
-    ModeIcon.style.color = "white";
-  }
-  else {
+  } else {
+    ModeIcon.style.color = "black";
     ModeIcon.classList.remove("bx-moon");
     ModeIcon.classList.add("bx-sun");
-    ModeIcon.removeAttribute("style");
   }
-}
+
+  // if (ModeIcon.classList.contains("bx-sun")) {
+  // } else {
+  // }
+};

@@ -49,10 +49,18 @@
       href="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
     />
 
+    <!-- Typed.js  -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
     {% block head %} {% endblock %}
   </head>
-  <body id="body-pd">
+  {% if session["Mode"] == "dark" %}
+        <body id="body-pd" class="dark">
+  {% else %}
+        <body id="body-pd">
+  {% endif %}
     <!-- Header -->
+
     <header class="header" id="header">
       <div class="header_toggle">
         <!-- <i class="bx bx-menu" ></i> -->
@@ -63,10 +71,14 @@
         ></i>
         {% block header %} {% endblock %}
       </div>
-      <i
-        class="bx bx-sun header_img"
-        onclick="WebsiteModeToggle(),SendMode()"
-      ></i>
+      {% if session["Mode"] == "dark" %}
+          <i class="bx bx-moon header_img" onclick="WebsiteModeToggle(),SendMode()" style="color: white;"></i>
+      {% else %}
+
+          <i class="bx bx-sun header_img" onclick="WebsiteModeToggle(),SendMode()"></i>
+      {% endif %}
+      
+      
     </header>
 
     <!-- NavBar -->
@@ -98,16 +110,29 @@
               <i class="bx bx-folder nav_icon"></i>
               <span class="nav_name">Homework</span>
             </a>
-            <a href="{{url_for('T_Console')}}" class="nav_link">
-              <i class="bx bx-bar-chart-alt-2 nav_icon"></i>
-              <span class="nav_name">Teacher Console</span>
-            </a>
+
+            {% if session["Admin"] == True %}
+                  <a href="{{url_for('T_Console')}}" class="nav_link">
+                    <i class="bx bx-bar-chart-alt-2 nav_icon"></i>
+                    <span class="nav_name">Teacher Console</span>
+                  </a>
+            {% else %}
+                  
+            {% endif %}
           </div>
         </div>
-        <a onclick="ConfirmLogout()" class="nav_link">
-          <i class="bx bx-log-in nav_icon" id="Log-In-Out-Icon"></i>
-          <span class="nav_name" id="Log-In-Out">Sign In</span>
-        </a>
+
+        {% if session["Log"] != True %}
+          <a href="{{url_for('User_Admin_Login')}}" class="nav_link">
+            <i class="bx bx-log-in nav_icon" id="Log-In-Out-Icon"></i>
+            <span class="nav_name" id="Log-In-Out">Sign In</span>
+          </a>
+        {% else %}
+          <a onclick="ConfirmLogout()" class="nav_link">
+            <i class="bx bx-log-out nav_icon" id="Log-In-Out-Icon"></i>
+            <span class="nav_name" id="Log-In-Out">Sign Out</span>
+          </a>
+        {% endif %}
       </nav>
     </div>
 
@@ -125,45 +150,15 @@
     {% block Content%} {% endblock %}
     <!--Container Main end-->
   </body>
-  <!-- Nav.js, Jquery AND Typed.js-->
+  <!-- Nav.js, Jquery AND Bootstrap-->
   <script src="{{url_for('static', filename='JS/Nav.js')}}"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
   <!----======== JS ======== -->
   {% block Script %}{% endblock %}
 
   <script>
     const ModeIcon = document.querySelector(".header_img");
-
-    // Sending GET request to Server URL: UpdateMode
-    // Server Returns the Previous Theme of the Body
-    // If returns the Theme/class of the bady adding that class to body tag
-    $.get({
-      url: "{{url_for('UpdateMode')}}",
-      // Data is getting recieved in string format
-      success: function (data, status) {
-        console.log(
-          `Data Recived from UpdateMode : ${
-            data != "" ? data : "No Data Recived"
-          }\nStatus : ${status}`
-        );
-
-        // If the recieved data is not empty
-        if (data != "") {
-          // Adds the recieved data to the class of the BODY
-          body.classList.add(data);
-
-          ModeIcon.classList.remove("bx-sun");
-          ModeIcon.classList.add("bx-moon");
-          ModeIcon.style.color = "white";
-        } else {
-          ModeIcon.classList.remove("bx-moon");
-          ModeIcon.classList.add("bx-sun");
-          ModeIcon.removeAttribute("style");
-        }
-      },
-    });
 
     // When the Toggle Mode button is clicked
     SendMode = () => {
@@ -177,7 +172,7 @@
         type: "POST",
         data: BodyClass.contains("dark")
           ? JSON.stringify("dark")
-          : JSON.stringify(""),
+          : JSON.stringify("light"),
         contentType: "application/json",
         success: function (res) {
           console.log(res);
@@ -201,51 +196,13 @@
       $(".Loader-Wrapper").fadeOut("slow");
     });
 
-    // Function that returns a bool true:(User has loged in) false:(Not loged in)
-    LoginOrNot = () => {
-      let a;
-      // Sending a get request
-      $.get({
-        url: "{{url_for('LoginOrNot')}}",
-        // async is false so that output can be returned
-        async: false,
-        success: function (data, status) {
-          // Parsing the data retrived fromt he server
-          let Loged = JSON.parse(data);
-          a = Loged;
-        },
-      });
-      return a;
-    };
-
-    // Login Variable store the info of the Login state
-    // If User is Loged in True else false
-    let Loged = LoginOrNot();
-
-    // If User has Loged in changing the Login button and its icon to Logout
-    if (Loged == true) {
-      console.log(`Inside LoginOrNOt : ${Loged}`);
-      // Login Icon in the sidebar
-      const LogIcon = document.getElementById("Log-In-Out-Icon");
-      // Login Text in the sidebar
-      const LogText = document.getElementById("Log-In-Out");
-      // Login Icon changes to Logout Icon
-      LogIcon.classList.remove("bx-log-in");
-      LogIcon.classList.add("bx-log-out");
-      // Login Text Changes to Logout Text
-      LogText.innerText = "Logout";
-    }
 
     // Confirming beform loggin out
     // Redirects to the Login page if Confirmed
     ConfirmLogout = () => {
-      if (Loged == true) {
-        let UserInp = confirm("Do you want to Logout !!");
-        if (UserInp == true) {
-          window.location.replace("{{url_for('Login')}}");
-        }
-      } else {
-        window.location.replace("/User_Admin_Login");
+      let Confirm = confirm("Do you want to log out ?");
+      if (Confirm == true) {
+        window.location.replace("{{url_for('Logout')}}")
       }
     };
 
