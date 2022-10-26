@@ -73,8 +73,12 @@ def Index():
         if session["Log"] == True:
             return render_template("Index.html", Content=f"Logged in Successfully !!")
         # If the user has not yet Logged in to the WEBSITE
+        else:
+            return render_template("Index.html", Content="Welcome to Home Page !!")
+
     except:
         return render_template("Index.html", Content="Welcome to Home Page !!")
+    
 
 
 
@@ -169,6 +173,9 @@ def Login():
             # Changeing the Warning color to orange
             Style = Style.replace("red", "orange")
             return render_template("Login.html", Style=Style, Msg1=a, Msg2=b)
+        
+        else:
+            return render_template("Login.html")
 
 
 @app.route("/AdminLogin", methods=["POST", "GET"])
@@ -229,15 +236,16 @@ def AdminLogin():
 
             return render_template("AdminLogin.html", Style=Style, Msg1=Display, Msg2=Display1)
     else:
-        return render_template("AdminLogin.html", Style=Style, Msg1=Display, Msg2=Display1)
+        return render_template("AdminLogin.html")
 """ Logout PAGE """
 
 
-@app.route("/logout", methods=["GET", "POST"])
+@app.route("/logout")
 def Logout():
     session["Log"] = False
     session["Admin"] = False
-    return redirect(url_for("Index"))
+    # return redirect(url_for("Index"))
+    return render_template("Index.html", Content = "Logged Out Successfully !!")
 
 
 """ Signup Page"""
