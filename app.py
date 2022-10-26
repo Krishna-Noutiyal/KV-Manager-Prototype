@@ -69,10 +69,12 @@ def UpdateMode():
 @app.route("/")
 def Index():
     # If the user has logged in to the WEBSITE
-    if session["Log"] == True:
-        return render_template("Index.html", Content=f"Logged in Successfully !!")
-    # If the user has not yet Logged in to the WEBSITE
-    return render_template("Index.html", Content="Welcome to Home Page !!")
+    try:
+        if session["Log"] == True:
+            return render_template("Index.html", Content=f"Logged in Successfully !!")
+        # If the user has not yet Logged in to the WEBSITE
+    except:
+        return render_template("Index.html", Content="Welcome to Home Page !!")
 
 
 
