@@ -156,6 +156,7 @@ def Login():
     IF User has ALREADY logged in to the website
     """
         # If user has clicked login button
+        print(session["Log"])
         if session["Log"] == False and SingupDisplay == "" and SingupDisplay1 == "":
 
             # Style of the Warning
@@ -245,7 +246,7 @@ def Logout():
     session["Log"] = False
     session["Admin"] = False
     # return redirect(url_for("Index"))
-    return render_template("Index.html", Content = "Logged Out Successfully !!")
+    return render_template("Index.html", Content = "Logged Out Successfully")
 
 
 """ Signup Page"""
