@@ -49,7 +49,7 @@ def Get_News(Sr="sr", Class= "Class", Teacher= "Teacher"):
 
     """
 
-    lst = sql(f"Select * from news where sr = {Sr} and class = {Class} and Teacher = {Teacher};")
+    lst = sql(f"Select * from news where sr = {Sr} and class = {Class} and Teacher = {Teacher} Order By Sr Desc;")
 
     return lst
 
@@ -65,7 +65,7 @@ def Get_Event(Sr="sr", Class= "Class", Teacher= "Teacher"):
         
     """
     # Since there are Some Null values in class  wrote the query like this 
-    lst = sql(f"Select * from events where Sr = {Sr} and (Class = {Class} or Class is null) and Teacher = {Teacher};")
+    lst = sql(f"Select * from events where Sr = {Sr} and (Class = {Class} or Class is null) and Teacher = {Teacher} Order By Sr Desc;")
     return lst
 
 
@@ -75,5 +75,5 @@ def Get_Newses():
 
 
 def Get_Events():
-    lst = sql("Select * from events;")
+    lst = sql("Select * from events Order By Sr Desc;")
     return lst
