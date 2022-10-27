@@ -6,6 +6,10 @@ body.dark .Padinputs {
   background-color: #02032c;
 }
 
+body.dark .post-card {
+  border: 1px solid rgba(105, 92, 254, 0.4);
+}
+
 body.dark .formbars button {
   color: #ccc;
 }

@@ -21,6 +21,7 @@
 }
 
 .container,
+.container-fluid,
 .home {
   margin-top: 8rem;
   padding-bottom: 5rem;
@@ -28,6 +29,34 @@
 
 .Post-Heading {
   font-weight: 700;
+}
+
+.text-muted {
+  color: #a1a5a9 !important;
+}
+
+.collapse-icon {
+  aspect-ratio: 1/1;
+  position: absolute;
+  width: -webkit-fit-content !important;
+  width: -moz-fit-content !important;
+  width: fit-content !important;
+  bottom: -25px;
+  left: 50%;
+  background-color: #695CFE;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.collapse-icon > i {
+  font-size: 24px;
+}
+
+.post-card {
+  border: 1px solid var(--bs-border-color-translucent);
 }
 
 @media only screen and (max-width: 768px) {

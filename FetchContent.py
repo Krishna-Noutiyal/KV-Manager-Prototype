@@ -25,7 +25,6 @@ def sql(query):
 
     # Cursor on the DATABASE
     cr = Db.cursor()
-
     cr.execute(query)
 
     Fetch = cr.fetchall()
@@ -76,4 +75,10 @@ def Get_Newses():
 
 def Get_Events():
     lst = sql("Select * from events Order By Sr Desc;")
+    return lst
+
+
+def Get_Classwork():
+    lst = sql("Select * from classwork;")
+
     return lst
