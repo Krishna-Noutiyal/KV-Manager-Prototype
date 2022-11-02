@@ -2,12 +2,12 @@
 
 <!-- Head -->
 {% block head %}
-<title>News</title>
+<title>Events</title>
 {% endblock %}
 
 <!-- Header Content -->
 {% block header %}
-<div class="text">News related to school</div>
+<div class="text">Events Going On !!</div>
 {% endblock %}
 
 <!-- Body Content -->
@@ -16,12 +16,12 @@
 <div class="container-fluid SecText">
   <div class="row gy-5 gap-lg-0 justify-content-center">
     {% for Cnt in Content %}
-    <div class="col-xl-4 col-lg-6">
+    <div class="col-xl-4 col-lg-6 ">
       <div class="p-4 shadow rounded post-card">
         <div
           class="hover-zoom Img-container shadow mw-40 d-flex justify-content-center"
         >
-          <a href="{{url_for('Post',NewsOrPost='News',SerialNo=Cnt[0])}}">
+          <a href="{{url_for('Post',NewsOrPost='Post',SerialNo=Cnt[0])}}">
             <img
               class="img-fluid"
               src="{{Cnt[-1]}}"
@@ -33,23 +33,19 @@
 
         <div class="Post-Context blockquote SecText">
 
-          <a href="{{url_for('Post',NewsOrPost='News',SerialNo=Cnt[0])}}" class=" d-text"><h2 class="mt-4 Post-Heading">{{Cnt[3]}}</h2></a>
-          
+            <a href="{{url_for('Post',NewsOrPost='Post',SerialNo=Cnt[0])}}" class="d-text"><h2 class="mt-4 Post-Heading">{{Cnt[3]}}</h2></a>
 
           <h5 class="Post-Heading d-flex justify-content-between">
             <span class="text-start">By : {{Cnt[2]}} </span>
-
+            
             {% if Cnt[1] != None %}
               <span class="text-end">Class : {{Cnt[1]}}</span>
             {% endif %}
-            
           </h5>
-
           <h5 class="px-4 lead Post-Para">
-            {{Cnt[4]}} <a href="{{url_for('Post',NewsOrPost='News',SerialNo=Cnt[0])}}" class="SecText">...</a>
+            {{Cnt[4]}} <a href="{{url_for('Post',NewsOrPost='Post',SerialNo=Cnt[0])}}" class="SecText">...</a>
           </h5>
-
-          <a href="{{url_for('Post',NewsOrPost='News',SerialNo=Cnt[0])}}"
+          <a href="{{url_for('Post',NewsOrPost='Post',SerialNo=Cnt[0])}}"
             ><footer class="blockquote-footer text-end mt-2 SecText">
               Read More
             </footer></a

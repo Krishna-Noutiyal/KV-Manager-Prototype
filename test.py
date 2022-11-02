@@ -1,0 +1,5 @@
+s = """
+As an MP citizen, I can confirm that poha is wonderful. Poha is delighting. Poha is best. Poha is precious. Poha is life. Poha is eternal. Poha is God. Poha is supreme. Poha is cure of incurable diseases. Poha is our religion. Poha is Poha. Poha is creator. Poha is destroyer. Poha is saviour. Poha is defender. Poha is ultimate. Poha is north. Poha is south. Poha is east. Poha is west. Poha is everywhere. Poha is freedom. Poha is liberty. Poha is justice. Poha is fraternity. Poha is unbeatable. Poha is strong. Poha is the source of all energy. Poha is gravity. Poha is friction. Poha is fire. Poha is water. Poha is air. Poha is earth. Poha is sky. Poha is reality. Poha is real. Poha is good. Poha is great. Poha beyond our understandings. Poha is home. Poha is work. Poha is sleep. Poha is knowledge. Poha is happiness. Poha is sadness. Poha is anger. Poha is fear. Poha is emotion. Poha is nostalgia. Poha is something I can talk for ever.
+"""
+
+print(s.replace("Poha", "Poha-Jalebi"))

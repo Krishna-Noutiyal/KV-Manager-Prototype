@@ -1,0 +1,51 @@
+{% extends "Base.html" %}
+
+
+<!-- Head -->
+{% block head %}
+    <title>
+        Classwork
+    </title>
+{% endblock %}
+
+
+<!-- Header Content -->
+{% block header %}
+<div class="text">Classwork done today</div>
+{% endblock %}
+
+
+<!-- Body Content -->
+
+{% block Content %}
+    <div class="container-fluid">
+
+        {% for work in range(0,Length)%}
+            <div class="row card SecText shadow Padinputs p-2 rounded">
+                <div class="card-body">
+                    <h2 class="card-title mt-4 Post-Heading d-text">{{Content[work][4]}}</h2>
+                    <h5 class="card-subtitle mb-2 text-muted d-flex flex-row justify-content-between  mt-3 ">
+                        <span>By : {{Content[work][2]}}</span>
+                        <span>{{Content[work][-1]}}</span>
+                    </h5>
+                    <h5 class="card-subtitle mb-2 text-muted mt-1"> Class : {{Content[work][1]}}</h5>
+                    <p class="card-text mt-3 px-2" id="Para-{{work}}">{{Content[work][5]}}</p>
+                    
+                </div>
+                
+                <!-- <a class="btn btn-primary" data-toggle="collapse" href="#Para-{{work}}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <i class='bx bx-chevron-down'></i>
+                </a> -->
+            </div>
+
+            
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+
+<!-- Scripts -->
+{% block Script %}
+
+{% endblock %}

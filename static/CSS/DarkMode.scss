@@ -6,6 +6,9 @@ body.dark .Padinputs {
   background-color: Var.$Darksidebar-color;
 }
 
+body.dark .post-card{
+  border: 1px solid rgba(105, 92, 254, 0.4);
+}
 body.dark .formbars button {
   color: Var.$Darktext-color;
   &:hover {
@@ -63,6 +66,6 @@ body.dark .l-navbar{
   
 }
 
-body.dark .shadow {
-  box-shadow: 0 .5rem 1rem rgba(118, 64, 255, 0.15)!important;  
+body.dark .shadow{
+  box-shadow: 0 0.5rem 1rem rgba(116, 93, 249, 0.14) !important;
 }

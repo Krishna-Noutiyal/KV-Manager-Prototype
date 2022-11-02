@@ -27,16 +27,16 @@
         Recovery Form
       </div>
       <div
-        class="text"
+        class="SecText"
         {{Style | safe}}
       >
         {{Msg1}} <br />{{Msg2}}
       </div>
       
       <span>
-        <label class="SecText" for="Passwd"><b>Email : </b></label>
+        <label class="SecText d-text" for="Passwd"><b>Email : </b></label>
         <input
-          class="Padinputs SecText"
+          class="Padinputs SecText d-text"
           type="email"
           name="Email"
           id="Email"
@@ -44,12 +44,12 @@
         />
       </span>
 
-      <button class="Padinputs SecText" type="submit">Submit</button>
+      <button class="Padinputs SecText d-text" type="submit">Submit</button>
             <div class="Signup-forgot">
-        <a href="{{url_for('ChangeCredentials')}}" class="SecText">
+        <a href="{{url_for('ChangeCredentials')}}" class="SecText d-text">
           <span>Change Credentials</span>
         </a>
-        <a href="{{url_for('Login')}}" class="SecText">
+        <a href="{{url_for('Login')}}" class="SecText d-text">
           <span>Back to Login</span>
         </a>
       </div>

@@ -25,22 +25,44 @@ document.addEventListener("DOMContentLoaded", function (event) {
   // Your code to run since DOM is loaded and ready
 });
 
+// const body
+const body = document.querySelector("body");
+// const html
+const html = document.querySelector("html");
+// const id nav-bar
+const navbar = document.querySelector("#nav-bar");
 Overflow = () => {
-  // const body
-  const body = document.querySelector("body");
-  // const html
-  const html = document.querySelector("html");
-  // const id nav-bar
-  const navbar = document.querySelector("#nav-bar");
   // If navbar classList doesn't contain show
+  console.log(!navbar.classList.contains("show"));
   if (!navbar.classList.contains("show")) {
     // If screen width is greater than 768px
     if (window.innerWidth <= 768) {
       html.style.overflow = "hidden";
       body.style.overflow = "hidden";
-    } else {
-      html.style.overflow = "auto";
-      body.style.overflow = "auto";
     }
+  } else {
+    html.style.overflow = "auto";
+    body.style.overflow = "auto";
   }
+};
+
+WebsiteModeToggle = () => {
+  const ModeIcon = document.querySelector(".header_img");
+
+  body.classList.toggle("dark");
+
+  // IF the body is 
+  if (body.classList.contains("dark")) {
+    ModeIcon.style.color = "white";
+    ModeIcon.classList.remove("bx-sun");
+    ModeIcon.classList.add("bx-moon");
+  } else {
+    ModeIcon.style.color = "black";
+    ModeIcon.classList.remove("bx-moon");
+    ModeIcon.classList.add("bx-sun");
+  }
+
+  // if (ModeIcon.classList.contains("bx-sun")) {
+  // } else {
+  // }
 };

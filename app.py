@@ -4,7 +4,7 @@ from cryptography.fernet import Fernet
 import json
 import pymysql as sql
 
-from FetchContent import Get_News, Get_Newses, Get_Event, Get_Events
+from FetchContent import Get_News, Get_Newses, Get_Event, Get_Events, Get_Classwork
 
 app = Flask(__name__)
 app.secret_key = "SecretKey"
@@ -70,14 +70,18 @@ def UpdateMode():
 def Index():
     # If the user has logged in to the WEBSITE
     try:
-        if session["Log"] == True:
+        if session["Log"] == True and session["Admin"]:
+            return render_template("Index.html", Content=f"Logged in As Admin Successfully !!")
+        
+        elif session["Log"] == True:
             return render_template("Index.html", Content=f"Logged in Successfully !!")
+        
+        
         # If the user has not yet Logged in to the WEBSITE
         else:
             return render_template("Index.html", Content="Welcome to Home Page !!")
 
     except:
-        session["Log"] = False
         return render_template("Index.html", Content="Welcome to Home Page !!")
     
 
@@ -157,25 +161,27 @@ def Login():
     IF User has ALREADY logged in to the website
     """
         # If user has clicked login button
-        if session["Log"] == False and SingupDisplay == "" and SingupDisplay1 == "":
 
-            # Style of the Warning
-            Style = 'style="font-size: 19px; color: red; text-align: center; display: none; "'
+        try :
+            if session["Log"] == False and SingupDisplay == "" and SingupDisplay1 == "":
 
-            return render_template("Login.html", Style=Style, Msg1=Display, Msg2=Display1)
+                # Style of the Warning
+                Style = 'style="font-size: 19px; color: red; text-align: center; display: none; "'
 
-        # If user has been redirected to Login from Signup Page
-        elif session["Log"] == False and SingupDisplay != "" and SingupDisplay1 != "":
-            a = SingupDisplay
-            b = SingupDisplay1
-            SingupDisplay = ""
-            SingupDisplay1 = ""
+                return render_template("Login.html", Style=Style, Msg1=Display, Msg2=Display1)
 
-            # Changeing the Warning color to orange
-            Style = Style.replace("red", "orange")
-            return render_template("Login.html", Style=Style, Msg1=a, Msg2=b)
-        
-        else:
+            # If user has been redirected to Login from Signup Page
+            elif session["Log"] == False and SingupDisplay != "" and SingupDisplay1 != "":
+                a = SingupDisplay
+                b = SingupDisplay1
+                SingupDisplay = ""
+                SingupDisplay1 = ""
+
+                # Changeing the Warning color to orange
+                Style = Style.replace("red", "orange")
+                return render_template("Login.html", Style=Style, Msg1=a, Msg2=b)
+            
+        except:
             return render_template("Login.html")
 
 
@@ -246,10 +252,10 @@ def Logout():
     session["Log"] = False
     session["Admin"] = False
     # return redirect(url_for("Index"))
-    return render_template("Index.html", Content = "Logged Out Successfully !!")
+    return render_template("Index.html", Content = "Logged Out Successfully")
 
 
-""" Signup Page"""
+""" Signup Page """
 
 
 @app.route("/Signup", methods=["POST", "GET"])
@@ -376,12 +382,14 @@ def Events():
 
 @app.route("/News", methods=["GET", "POST"])
 def News():
-    return render_template("News.html", Content=Get_News())
+    return render_template("News.html", Content=Get_Newses())
+
 
 
 @app.route("/Classwork", methods=["GET", "POST"])
 def Classwork():
-    return render_template("Classwork.html")
+    Work = Get_Classwork()
+    return render_template("Classwork.html",Length = len(Work), Content= Work)
 
 
 @app.route("/Homework", methods=["GET", "POST"])

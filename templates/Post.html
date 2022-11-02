@@ -1,0 +1,62 @@
+{% extends "Base.html" %}
+
+<!-- Head -->
+{% block head %}
+<title>Events</title>
+{% endblock %}
+
+<!-- Header Content -->
+{% block header %}
+<div class="text">Events Going On !!</div>
+{% endblock %}
+
+<!-- Body Content -->
+
+{% block Content %}
+<div class="container-fluid SecText ">
+  <div class="row gy-5 gap-lg-0 justify-content-center ">
+    <div class="col ">
+      <div class="p-4 shadow rounded post-card">
+        <div
+          class="Img-container h-40 d-flex justify-content-center"
+        >
+            <img
+              class="img-fluid ratio ratio-16x9"
+              src="{{Cnt[-1]}}"
+              alt="Image Not Found"
+              srcset=""
+              style="max-height: 80vh;"
+            />
+        </div>
+
+        <div class="Post-Context blockquote SecText">
+
+          <!-- Heading -->
+
+          <h2 class="mt-4 Post-Heading d-text">{{Cnt[3]}}</h2>
+
+          <h5 class="Post-Heading d-flex justify-content-between">
+
+            <!-- Teacher -->
+            <span>By : {{Cnt[2]}} </span> <br>
+                        
+            {% if Cnt[1] != None %}
+              <span class="text-end">Class : {{Cnt[1]}}</span>
+            {% endif %}
+          </h5>
+
+          <br>
+
+          <!-- Complete Content -->
+          <h5 class="px-4 lead Post-Para">
+            {{Cnt[5]}} 
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+<!-- Scripts -->
+{% block Script %} {% endblock %}
