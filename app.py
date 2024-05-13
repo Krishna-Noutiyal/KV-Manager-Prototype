@@ -11,13 +11,13 @@ app.secret_key = "SecretKey"
 UserName = ""
 Passwd = ""
 
-# Display : Msg1 displayed if UserName and Passwd is incorrect
+# Display: Msg1 displayed if UserName and Password is incorrect
 Display = ""
 
-# Display : Msg2 displayed if UserName and Passwd is incorrect
+# Display: Msg2 displayed if UserName and Password is incorrect
 Display1 = ""
 
-# Msg Displayed when redirected from Signup page to Login Page
+# Msg Displayed when redirected from the Signup page to the Login Page
 SingupDisplay = ""
 SingupDisplay1 = ""
 
@@ -47,7 +47,7 @@ def UpdateMode():
     # JS generates a Post request with the ITS DATA = CLASS OF THE BODY
     if request.method == "POST":
 
-        # Variable containg the Class of the Body
+        # Variable containing the Class of the Body
         RequestContent = json.loads(request.data)
         # print(f"Theme of the Website : {RequestContent}")
 
@@ -102,7 +102,7 @@ def User_Admin_Login():
 
 @app.route("/Login", methods=["POST", "GET"])
 def Login():
-    """Saves UserName and Password in the Globle Variables and changes log = True"""
+    """Saves UserName and Password in the Global Variables and changes log = True"""
     global Display
     global Display1
     global SingupDisplay
@@ -111,13 +111,13 @@ def Login():
     # Style of the Warning
     Style = 'style="font-size: 19px; color: red; text-align: center;"'
 
-    #   If the Form   is Submitted
+    #   If the Form is Submitted
     if request.method == "POST":
 
-        # Try except if UserName and Passwd is not in the DATABASE
+        # Try except if UserName and Password are not in the DATABASE
         try:
 
-            # Gets the data from server and stores in UserInfo dict (Username:Passwd)
+            # Gets the data from the server and stores it in UserInfo dictionary (Username: Password)
             cr.execute("select username,passwd,email from flask;")
             UserInfo = {i[0]: [Decrypt(i[2]), Decrypt(i[1])]
                         for i in cr.fetchall()}
@@ -127,9 +127,11 @@ def Login():
             #     print(f"UserName : {i}")
             #     print(f"Email : {j[0]}")
             #     print(f"Passwd : {j[1]}")
+
+            
             # UserName taken from the FORM
             UserName = request.form["Usr"]
-            # Passwd taken from the FORM
+            # Passwd was taken from the FORM
             Passwd = request.form['Passwd']
             # If Credentials in the database does not match the User Input
             # Raises an Exception
@@ -137,19 +139,19 @@ def Login():
 
                 raise Exception("Wrong UserName")
 
-            # If Credentials matches Sets log varaible = true
-            # Means user is now Loged in the Website
+            # If Credentials match Sets log variable = true
+            # Means the user is now Logged in to the Website
             else:
 
-                # Log = True if user has logged in the website
+                # Log = True if the user has logged in to the website
                 session["Log"] = True
 
                 return redirect(url_for("Index"))
 
-        # If Exception Occur Changes Display and Displa1 varaible
+        # If Exception Occurs Changes Display and Displa1 variable
         # And Renders the Login page again but with the Msg of Display and Display1
         except Exception as e:
-            Display = "Wrong UserName or Password"
+            Display = "Wrong Username or Password"
             Display1 = "!! TRY AGAIN !!"
 
             return render_template("Login.html", Style=Style, Msg1=Display, Msg2=Display1)
@@ -157,10 +159,10 @@ def Login():
     
     else:
         """
-    If User has not yet Loged in to the website  OR
-    IF User has ALREADY logged in to the website
+    If the User has not yet Logged in to the website  OR
+    If the User has ALREADY logged in to the website
     """
-        # If user has clicked login button
+        # If the user has clicked the log in button
 
         try :
             if session["Log"] == False and SingupDisplay == "" and SingupDisplay1 == "":
@@ -170,14 +172,14 @@ def Login():
 
                 return render_template("Login.html", Style=Style, Msg1=Display, Msg2=Display1)
 
-            # If user has been redirected to Login from Signup Page
+            # If the user has been redirected to Login from the Signup Page
             elif session["Log"] == False and SingupDisplay != "" and SingupDisplay1 != "":
                 a = SingupDisplay
                 b = SingupDisplay1
                 SingupDisplay = ""
                 SingupDisplay1 = ""
 
-                # Changeing the Warning color to orange
+                # Changeing the Warning colour to orange
                 Style = Style.replace("red", "orange")
                 return render_template("Login.html", Style=Style, Msg1=a, Msg2=b)
             
@@ -187,7 +189,7 @@ def Login():
 
 @app.route("/AdminLogin", methods=["POST", "GET"])
 def AdminLogin():
-    """Saves UserName and Password in the Globle Variables and changes log = True"""
+    """Saves UserName and Password in the Global Variables and changes log = True"""
     global Display
     global Display1
     global SingupDisplay
@@ -199,34 +201,31 @@ def AdminLogin():
     #   If the Form   is Submitted
     if request.method == "POST":
 
-        # Try except if UserName and Passwd is not in the DATABASE
+        # Try except if UserName and Password are not in the DATABASE
         try:
 
-            # Gets the data from server and stores in UserInfo dict (Username:Passwd)
+            # Gets the data from the server and stores it in the UserInfo dictionary (Username: Password)
             cr.execute("select username,passwd,email from flask;")
             UserInfo = {i[0]: [Decrypt(i[2]), Decrypt(i[1])]
                         for i in cr.fetchall()}
 
-            # print("This function ran !!!")
-            # for i, j in UserInfo.items():
-            #     print(f"UserName : {i}")
-            #     print(f"Email : {j[0]}")
-            #     print(f"Passwd : {j[1]}")
+            
             # UserName taken from the FORM
             UserName = request.form["Usr"]
-            # Passwd taken from the FORM
+            # Passwd was taken from the FORM
             Passwd = request.form['Passwd']
+            
             # If Credentials in the database does not match the User Input
             # Raises an Exception
             if UserInfo[UserName][1] != Passwd:
 
                 raise Exception("Wrong UserName")
 
-            # If Credentials matches Sets log varaible = true
-            # Means user is now Loged in the Website
+            # If Credentials match Sets log variable = true
+            # Means the user is now Logged in to the Website
             else:
 
-                # Log = True if user has logged in the website
+                # Log = True if the user has logged in to the website
                 session["Log"] = True
 
                 """ Admin = True to let know if the account logged in is admin"""
@@ -235,7 +234,7 @@ def AdminLogin():
                 print(f"\n\n\n\n {session['Admin']}\n\n\n\n")
                 return redirect(url_for("Index"))
 
-        # If Exception Occur Changes Display and Displa1 varaible
+        # If Exception Occurs Changes Display and Displa1 variable
         # And Renders the Login page again but with the Msg of Display and Display1
         except Exception as e:
             Display = "Wrong UserName or Password"
@@ -268,7 +267,7 @@ def Signup():
     Msg2 = ""
     Style = 'style="font-size: 20px; color: red; text-align: center; display: none;"'
 
-    # If users submits the form
+    # If users submit the form
     if request.method == "POST":
 
         # Storing the form input to variables
@@ -276,14 +275,13 @@ def Signup():
         Email = request.form["Email"].lower()
         Passwd = Encrypt(request.form["Passwd"])
 
-        # Check if the Email and UserName already exist in the database or not
-        # If exist throws an error
-        # If not exist adds the new user to database
+        # Throws Error if the Email and UserName already exist in the database
+        # If not exist add the new user to the database
         try:
             if Email == "":
                 raise Exception("Wrong Email !!!")
 
-            # Executing mysql quiery
+            # Executing MySQL query
             cr.execute("select email from flask;")
 
             # List of all emails on the server
@@ -294,9 +292,9 @@ def Signup():
             if Email in l:
                 raise Exception("Email already used !!")
 
-            # Else Adds new user to Database
+            # Else Adds a new user to the Database
             else:
-                # Encrypting the Email before sending to Database
+                # Encrypting the Email before sending it to the Database
                 Email = Encrypt(Email)
 
                 cr.execute(
@@ -335,7 +333,7 @@ def Forgot():
         Email = request.form["Email"]
 
         try:
-            # SQL Quiery to retrieve UserName Email and Password fromt he database
+            # SQL Query to retrieve UserName Email and Password from the database
             cr.execute("select Username,Email,Passwd from flask;")
 
             # List containing the data of the user in Decrypted form
@@ -355,7 +353,7 @@ def Forgot():
         except Exception as e:
             return render_template("Forgot.html", Style=Style, Msg1=f"No Account Found Associated With", Msg2=f"{Email}")
 
-    # Changes the style Display : none; to avoid unnecessary spacing if no warning is displayed
+    # Changes the style Display: none; to avoid unnecessary spacing if no warning is displayed
     Style = 'style="font-size: 19px; color: red; text-align: center; display : none ;"'
     return render_template("Forgot.html", Style=Style)
 
@@ -437,7 +435,7 @@ def ChangeCredentials():
         UserName = request.form["Usr"]
         Passwd = Encrypt(request.form["Passwd"])
 
-        # SQL Quiery to retrieve UserName Email and Password fromt he database
+        # SQL Query to retrieve UserName Email and Password from the database
         cr.execute("select Username,Email,Passwd from flask;")
 
         # List containing the data of the user in Decrypted form
@@ -464,7 +462,7 @@ def ChangeCredentials():
         # Style for the Msg
         Style = Style.replace("display: none;", "")
 
-        # After for loop if Username and Email doesn't matches Throwes an error on the page
+        # After the for loop if the Username and Email don't match Throws an error on the page
         return render_template("ChangeCredentials.html", Style=Style, Msg0=f"Credentials Doesn't Match", Msg1=f"!! Enter Email or UserName Correctly !!")
 
     # If the request is GET
@@ -481,9 +479,9 @@ if __name__ == "__main__":
 
     # Connecting to the DATABASE
     # Db = sql.connect(host="localhost", user="root",
-    #                  passwd="19780000", database="Flask", autocommit=True, auth_plugin='mysql_native_password')
+    #                  passwd="YourPassword", database="Flask", autocommit=True, auth_plugin='mysql_native_password')
     Db = sql.connect(host="localhost", user="root",
-                     passwd="19780000", database="Flask", autocommit=True)
+                     passwd="YourPassword", database="Flask", autocommit=True)
 
     # Cursor on the DATABASE
     cr = Db.cursor()
